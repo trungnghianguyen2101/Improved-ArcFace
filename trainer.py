@@ -59,7 +59,7 @@ class Trainer:
 
     def train(self, 
               verbose = 0, 
-              use_sam_optim = False,
+              use_sam_optim = True,
               scheduler_config = None):
         '''
         verbose: 
@@ -94,7 +94,7 @@ class Trainer:
                                             train_loss / 10,
                                             epoch * len(self.train_loader) + idx)
             acc = []
-            val_loss = 0.0
+            val_loss = 10.0
             print("Validating...")
             for idx, (X_val, y_val) in enumerate(self.val_loader):
                 loss, correct = self.eval(X_val, y_val)
@@ -138,10 +138,10 @@ class Trainer:
 
     def save_trained_model(self, 
                            trained_model: ArcFaceModel = None, 
-                           prefix: str = None,
+                           prefix: str = 'pth',
                            backbone_name: str = None, 
                            num_classes: int = 1000,
-                           split_modules: bool = False,
+                           split_modules: bool = True,
                            extension: str = 'pth'):
         now = '{0:%Y%m%d}'.format(datetime.datetime.now())
         if not os.path.exists('./weights/'+now):
